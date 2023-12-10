@@ -1,0 +1,23 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.number-input-container {
+  display: flex;
+  align-items: center;
+}
+/* input[type="number"] {
+  margin: 0 10px;
+  width: 60px;
+  text-align: center;
+} */
+
+section {
+  display: table;
+}

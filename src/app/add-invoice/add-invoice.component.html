@@ -1,0 +1,99 @@
+<section>
+
+<form class="example-form">
+  <mat-form-field class="example-full-width"  appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <mat-form-field class="example-full-width"  appearance="outline">
+    <mat-label>Telephone</mat-label>
+    <span matPrefix>+ &nbsp;</span>
+    <input type="tel" matInput placeholder="555-555-1234">
+    <mat-icon matSuffix>mode_edit</mat-icon>
+  </mat-form-field>
+
+
+  <p>
+    <mat-grid-list cols="3" rowHeight="">
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Select product</mat-label>
+          <mat-select  required>
+            <mat-option value="volvo">Volvo</mat-option>
+            <mat-option value="saab">Saab</mat-option>
+            <mat-option value="mercedes">Mercedes</mat-option>
+            <mat-option value="audi">Audi</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>  <mat-form-field appearance="outline">
+        <mat-label>QTY</mat-label>
+        <input matInput>
+      </mat-form-field></mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-icon-button color="primary">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </mat-grid-tile>
+
+      <!-- <mat-divider></mat-divider> -->
+    </mat-grid-list>
+
+
+
+</p>
+<p>
+
+</p>
+<form [formGroup]="myForm" >
+  <div formArrayName="myFormArray">
+    <div *ngFor="let group of myFormArray.controls; let i = index" [formGroupName]="i">
+      <!-- <input formControlName="input1" type="text">
+      <input formControlName="input2" type="text"> -->
+      <mat-grid-list cols="3" rowHeight="">
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-label>Select product</mat-label>
+            <mat-select  required>
+              <mat-option value="volvo">Volvo</mat-option>
+              <mat-option value="saab">Saab</mat-option>
+              <mat-option value="mercedes">Mercedes</mat-option>
+              <mat-option value="audi">Audi</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>  <mat-form-field appearance="outline">
+          <mat-label>QTY</mat-label>
+          <input matInput>
+        </mat-form-field></mat-grid-tile>
+        <mat-grid-tile>
+          <button mat-icon-button color="primary"  (click)="removeRow(i)">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </mat-grid-tile>
+
+        <!-- <mat-divider></mat-divider> -->
+      </mat-grid-list>
+      <!-- Add more inputs as needed -->
+      <!-- <button type="button" (click)="removeRow(i)">Remove</button> -->
+    </div>
+  </div>
+  <button mat-fab color="primary" (click)="addNewRow()">
+    <mat-icon class="mat-18">add</mat-icon>
+  </button>
+  <!-- <button type="button" >Add New Row</button> -->
+  <button type="submit">Submit</button>
+</form>
+
+  <!-- <div class="number-input-container">
+    <button mat-mini-fab color="primary" (click)="decrement()">
+      -
+    </button>
+    <input type="number" [value]="value" readonly>
+    <button mat-mini-fab color="primary" (click)="increment()">
+      +
+    </button>
+  </div> -->
+
+</form>
+</section>

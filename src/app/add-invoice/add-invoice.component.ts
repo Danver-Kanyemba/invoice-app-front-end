@@ -15,6 +15,7 @@ interface Food {
 
 export class AddInvoiceComponent {
   myForm: FormGroup;
+  total: number = 0;
   // myFormArray: FormArray = this.fb.array([]);
   get myFormArray() {
     return this.myForm.get('myFormArray') as FormArray;
@@ -56,14 +57,22 @@ export class AddInvoiceComponent {
     }
   }
 
+  updateTotal() {
+    this.total = this.myFormArray.controls.reduce(
+      (acc, control) => acc + this.calculateTotal(control.get('myselect')?.value, control.get('qty')?.value),
+      0
+    );
+  }
   removeRow(index: number) {
   this.myFormArray.removeAt(index);
+  this.updateTotal();
 }
 
   decrement() {
     if (this.value > 0) {
       this.value--;
     }
+    this.updateTotal();
   }
 
   addNewRow() {
@@ -73,5 +82,15 @@ export class AddInvoiceComponent {
       // Add more controls as needed
     });
     this.myFormArray.push(newRow);
+    this.updateTotal();
   }
+  onSubmit() {
+    if (this.myForm.valid) {
+      // Assuming you want to output the entire form data object
+      console.log('Form Data:', this.myForm.value);
+    } else {
+      console.error('Form is not valid. Please check your inputs.');
+    }
+  }
+
 }

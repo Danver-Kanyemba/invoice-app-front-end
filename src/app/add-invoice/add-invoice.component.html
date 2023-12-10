@@ -24,14 +24,15 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Select product</mat-label>
-            <mat-select  #myselect required>
+            <mat-select  #myselect required formControlName="input1" [(ngModel)]="group.get('selectedOption').value">
               <mat-option [value]="item.value" *ngFor="let item of Rood">{{item.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>  <mat-form-field appearance="outline">
+        {{ group.get('selectedOption')?.value?.viewValue }}
+        <mat-grid-tile>  <mat-form-field appearance="outline" >
           <mat-label>QTY</mat-label>
-          <input #qty matInput type="number">
+          <input #qty matInput type="number" formControlName="input2">
         </mat-form-field></mat-grid-tile>
         <mat-grid-tile>
           <mat-label>
@@ -53,8 +54,11 @@
   <button mat-fab color="primary" (click)="addNewRow()">
     <mat-icon class="mat-18">add</mat-icon>
   </button>
+  <p>Total: {{ total }}</p>
+
   <!-- <button type="button" >Add New Row</button> -->
-  <button type="submit">Submit</button>
+  <button type="submit" (click)="onSubmit()">Submit</button>
+
 </form>
 
   <!-- <div class="number-input-container">

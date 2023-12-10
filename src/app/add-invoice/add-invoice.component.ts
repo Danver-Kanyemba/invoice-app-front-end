@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 
-import { FormArray, FormBuilder,FormGroup } from '@angular/forms';
-
+import { FormArray, FormBuilder,FormGroup, AbstractControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 interface Food {
   value: string;
   viewValue: string;
@@ -16,6 +16,9 @@ interface Food {
 export class AddInvoiceComponent {
   myForm: FormGroup;
   total: number = 0;
+  selectedFoodText: string='';
+  
+
   // myFormArray: FormArray = this.fb.array([]);
   get myFormArray() {
     return this.myForm.get('myFormArray') as FormArray;
@@ -46,6 +49,18 @@ export class AddInvoiceComponent {
   increment() {
     this.value++;
   }
+  // onSelectionChange(event: MatSelectChange) {
+  //   const selectedOption = event.source.selected as MatOption;
+  //   this.selectedFoodText = selectedOption.viewValue;
+  // }
+  onOptionSelected(event: any, group: AbstractControl) {
+    // Get the selected value from the event
+    const selectedValue = event.source.selected.viewValue;
+
+    // Update the 'selectedOption' FormControl in the form group
+    group.get('selectedOption')?.setValue(selectedValue);
+  }
+
   calculateTotal(productValue: string, quantity: string): number {
     const productNumber = +productValue; // Convert the string to a number
     const quantityNumber = +quantity; // Convert the string to a number
@@ -66,7 +81,7 @@ export class AddInvoiceComponent {
   removeRow(index: number) {
   this.myFormArray.removeAt(index);
   this.updateTotal();
-}
+  }
 
   decrement() {
     if (this.value > 0) {
@@ -78,7 +93,9 @@ export class AddInvoiceComponent {
   addNewRow() {
     const newRow = this.fb.group({
       input1: [''], // Replace with your control names and default values
-      input2: [''],
+      input2: [],
+      qtyandproduct:[],
+      selectedOption: [null],
       // Add more controls as needed
     });
     this.myFormArray.push(newRow);
@@ -93,4 +110,9 @@ export class AddInvoiceComponent {
     }
   }
 
+   calculateTotalInput1() {
+    return this.myFormArray.controls
+      .map((group) => group.get('qtyandproduct')?.value || 0) // Use 0 as default value if input1 is null
+      .reduce((acc, value) => acc + value, 0);
+  }
 }

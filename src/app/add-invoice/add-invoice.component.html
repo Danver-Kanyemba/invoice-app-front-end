@@ -24,7 +24,7 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Select product</mat-label>
-            <mat-select  #myselect required formControlName="input1" [(ngModel)]="group.get('selectedOption').value">
+            <mat-select  #myselect required formControlName="input1" (selectionChange)="onOptionSelected($event, group)">
               <mat-option [value]="item.value" *ngFor="let item of Rood">{{item.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -35,22 +35,29 @@
           <input #qty matInput type="number" formControlName="input2">
         </mat-form-field></mat-grid-tile>
         <mat-grid-tile>
-          <mat-label>
-            {{ calculateTotal(myselect.value, qty.value) }}
-          </mat-label>
+          <mat-form-field appearance="outline" disabled>
+
+            <mat-label>
+
+
+            </mat-label>
+            <input #qty matInput type="number" value="{{ calculateTotal(myselect.value, qty.value) }}" formControlName="qtyandproduct">
+          </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <button mat-icon-button color="primary"  (click)="removeRow(i)">
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
         </mat-grid-tile>
-
+        {{selectedFoodText}}
         <!-- <mat-divider></mat-divider> -->
       </mat-grid-list>
       <!-- Add more inputs as needed -->
       <!-- <button type="button" (click)="removeRow(i)">Remove</button> -->
     </div>
   </div>
+  <p>Total of input1 values: {{ calculateTotalInput1()}}</p>
+
   <button mat-fab color="primary" (click)="addNewRow()">
     <mat-icon class="mat-18">add</mat-icon>
   </button>

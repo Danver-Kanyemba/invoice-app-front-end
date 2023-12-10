@@ -12,36 +12,6 @@
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
 
-
-  <p>
-    <mat-grid-list cols="3" rowHeight="">
-      <mat-grid-tile>
-        <mat-form-field>
-          <mat-label>Select product</mat-label>
-          <mat-select  required>
-            <mat-option value="volvo">Volvo</mat-option>
-            <mat-option value="saab">Saab</mat-option>
-            <mat-option value="mercedes">Mercedes</mat-option>
-            <mat-option value="audi">Audi</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </mat-grid-tile>
-      <mat-grid-tile>  <mat-form-field appearance="outline">
-        <mat-label>QTY</mat-label>
-        <input matInput>
-      </mat-form-field></mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-icon-button color="primary">
-          <mat-icon class="mat-18">delete</mat-icon>
-        </button>
-      </mat-grid-tile>
-
-      <!-- <mat-divider></mat-divider> -->
-    </mat-grid-list>
-
-
-
-</p>
 <p>
 
 </p>
@@ -50,22 +20,24 @@
     <div *ngFor="let group of myFormArray.controls; let i = index" [formGroupName]="i">
       <!-- <input formControlName="input1" type="text">
       <input formControlName="input2" type="text"> -->
-      <mat-grid-list cols="3" rowHeight="">
+      <mat-grid-list cols="4" rowHeight="">
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Select product</mat-label>
-            <mat-select  required>
-              <mat-option value="volvo">Volvo</mat-option>
-              <mat-option value="saab">Saab</mat-option>
-              <mat-option value="mercedes">Mercedes</mat-option>
-              <mat-option value="audi">Audi</mat-option>
+            <mat-select  #myselect required>
+              <mat-option [value]="item.value" *ngFor="let item of Rood">{{item.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>  <mat-form-field appearance="outline">
           <mat-label>QTY</mat-label>
-          <input matInput>
+          <input #qty matInput type="number">
         </mat-form-field></mat-grid-tile>
+        <mat-grid-tile>
+          <mat-label>
+            {{ calculateTotal(myselect.value, qty.value) }}
+          </mat-label>
+        </mat-grid-tile>
         <mat-grid-tile>
           <button mat-icon-button color="primary"  (click)="removeRow(i)">
             <mat-icon class="mat-18">delete</mat-icon>

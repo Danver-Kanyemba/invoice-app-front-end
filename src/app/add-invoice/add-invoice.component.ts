@@ -31,19 +31,29 @@ export class AddInvoiceComponent {
 
   }
   Rood = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+    {value: '560', viewValue: 'Steak'},
+    {value: '134', viewValue: 'Pizza'},
+    {value: '45', viewValue: 'Tacos'},
   ];
 
   value = 0;
   foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+    {value: '560', viewValue: 'Steak'},
+    {value: '450', viewValue: 'Pizza'},
+    {value: '600', viewValue: 'Tacos'},
   ];
   increment() {
     this.value++;
+  }
+  calculateTotal(productValue: string, quantity: string): number {
+    const productNumber = +productValue; // Convert the string to a number
+    const quantityNumber = +quantity; // Convert the string to a number
+
+    if (!isNaN(productNumber) && !isNaN(quantityNumber)) {
+      return productNumber * quantityNumber;
+    } else {
+      return 0; // Or handle the error in a way that makes sense for your application
+    }
   }
 
   removeRow(index: number) {

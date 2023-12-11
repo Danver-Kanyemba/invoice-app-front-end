@@ -35,12 +35,12 @@
           <input #qty matInput type="number" formControlName="input2" (change)="calculateTotal5(myselect.value, qty.value,i)">
         </mat-form-field></mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
-            <mat-label>
-
+          <!-- <mat-form-field appearance="outline"> -->
+            <mat-label >
+              {{ calculateTotal(myselect.value, qty.value) }}
             </mat-label>
-            <input #qty matInput type="number"  formControlName="qtyandproduct"  [value]="calculateTotal(myselect.value, qty.value)">
-          </mat-form-field>
+            <!-- <input #qty matInput type="number"  hidden="true" formControlName="qtyandproduct"  [value]="calculateTotal(myselect.value, qty.value)"> -->
+          <!-- </mat-form-field> -->
         </mat-grid-tile>
         <mat-grid-tile>
           <button mat-icon-button color="primary"  (click)="removeRow(i)">

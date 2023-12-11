@@ -39,6 +39,7 @@ export class AddInvoiceComponent {
       this.totalQtyAndProduct = this.calculateTotalInput1()
     });
 
+    this.addNewRow();
   }
   Rood = [
     {value: '560', viewValue: 'Steak'},

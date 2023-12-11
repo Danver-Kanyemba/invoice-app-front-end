@@ -17,7 +17,7 @@ export class AddInvoiceComponent {
   myForm: FormGroup;
   total: number = 0;
   selectedFoodText: string='';
-  
+  totalQtyAndProduct: number = 0;
 
   // myFormArray: FormArray = this.fb.array([]);
   get myFormArray() {
@@ -27,11 +27,17 @@ export class AddInvoiceComponent {
     this.myForm = this.fb.group({
       myFormArray: this.fb.array([]),
     });
+
   }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // this.myFormArray = this.fb.array([])
+    this.myForm.get('myFormArray')?.valueChanges.subscribe((value) => {
+      // Update the total whenever qtyandproduct changes
+      console.log('qtyandproduct value changed:', value);
+      this.totalQtyAndProduct = this.calculateTotalInput1()
+    });
 
   }
   Rood = [
@@ -59,6 +65,34 @@ export class AddInvoiceComponent {
 
     // Update the 'selectedOption' FormControl in the form group
     group.get('selectedOption')?.setValue(selectedValue);
+  }
+
+  calculateTotalAssign() {
+    console.log("INput changed");
+
+    this.totalQtyAndProduct = this.calculateTotalInput1()
+    console.log(this.totalQtyAndProduct);
+
+  }
+
+
+  calculateTotal5(productValue: string, quantity: string, index:number) {
+    const productNumber = +productValue; // Convert the string to a number
+    const quantityNumber = +quantity; // Convert the string to a number
+
+    if (!isNaN(productNumber) && !isNaN(quantityNumber)) {
+      const myFormArray = this.myForm.get('myFormArray') as FormArray;
+
+    // Assuming you have an index (let's say 0 for the first element)
+
+    // Now you can set the value for the specific index
+    myFormArray.at(index).patchValue({
+      // Your values go here
+      qtyandproduct: productNumber * quantityNumber,
+
+    });
+      // return productNumber * quantityNumber;
+    }
   }
 
   calculateTotal(productValue: string, quantity: string): number {

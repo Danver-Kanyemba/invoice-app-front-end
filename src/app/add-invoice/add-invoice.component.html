@@ -32,16 +32,14 @@
         {{ group.get('selectedOption')?.value?.viewValue }}
         <mat-grid-tile>  <mat-form-field appearance="outline" >
           <mat-label>QTY</mat-label>
-          <input #qty matInput type="number" formControlName="input2">
+          <input #qty matInput type="number" formControlName="input2" (change)="calculateTotal5(myselect.value, qty.value,i)">
         </mat-form-field></mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field appearance="outline" disabled>
-
+          <mat-form-field appearance="outline">
             <mat-label>
 
-
             </mat-label>
-            <input #qty matInput type="number" value="{{ calculateTotal(myselect.value, qty.value) }}" formControlName="qtyandproduct">
+            <input #qty matInput type="number"  formControlName="qtyandproduct"  [value]="calculateTotal(myselect.value, qty.value)">
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -56,12 +54,19 @@
       <!-- <button type="button" (click)="removeRow(i)">Remove</button> -->
     </div>
   </div>
-  <p>Total of input1 values: {{ calculateTotalInput1()}}</p>
-
-  <button mat-fab color="primary" (click)="addNewRow()">
-    <mat-icon class="mat-18">add</mat-icon>
-  </button>
-  <p>Total: {{ total }}</p>
+  <!-- <p>Total of input1 values: $ {{ calculateTotalInput1()}}</p> -->
+  <mat-grid-list cols="4" rowHeight="">
+    <mat-grid-tile>
+    </mat-grid-tile>
+    <mat-grid-tile>
+</mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-fab color="primary" (click)="addNewRow()">
+        <mat-icon class="mat-18">add</mat-icon>
+      </button>
+  </mat-grid-tile>
+  </mat-grid-list>
+  <h1>Total: {{ totalQtyAndProduct }}</h1>
 
   <!-- <button type="button" >Add New Row</button> -->
   <button type="submit" (click)="onSubmit()">Submit</button>

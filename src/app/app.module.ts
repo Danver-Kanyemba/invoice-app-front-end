@@ -14,11 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDividerModule} from '@angular/material/divider';
+import { HttpClientModule } from '@angular/common/http';
 // import { MatSelectChange } from '@angular/material/select';
+import { importProvidersFrom } from '@angular/core';
+import { AllInvoicesComponent } from './all-invoices/all-invoices.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     AppComponent,
-    AddInvoiceComponent
+    AddInvoiceComponent,
+    AllInvoicesComponent
   ],
   imports: [
     BrowserModule,
@@ -26,9 +32,12 @@ import {MatDividerModule} from '@angular/material/divider';
     BrowserAnimationsModule,
     FormsModule,
   MatFormFieldModule, MatInputModule, MatSelectModule,MatToolbarModule,MatIconModule,
-  MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule 
+  MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule,
+  MatTableModule, MatSortModule
   ],
-  providers: [],
+  providers: [
+    importProvidersFrom(HttpClientModule),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

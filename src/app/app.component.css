@@ -1,3 +1,8 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.body-space{
+  margin:2;
+  background-color: black;
+}

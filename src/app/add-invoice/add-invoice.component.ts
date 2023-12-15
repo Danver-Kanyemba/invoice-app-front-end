@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component} from '@angular/core';
 
 import { FormArray, FormBuilder,FormGroup, AbstractControl } from '@angular/forms';
@@ -15,6 +16,7 @@ interface Food {
 
 export class AddInvoiceComponent {
   myForm: FormGroup;
+
   total: number = 0;
   selectedFoodText: string='';
   totalQtyAndProduct: number = 0;
@@ -23,9 +25,12 @@ export class AddInvoiceComponent {
   get myFormArray() {
     return this.myForm.get('myFormArray') as FormArray;
   }
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private http : HttpClient){
     this.myForm = this.fb.group({
+      name:[''],
+      phone_Number:[''],
       myFormArray: this.fb.array([]),
+      Total: this.totalQtyAndProduct
     });
 
   }
@@ -92,6 +97,7 @@ export class AddInvoiceComponent {
       qtyandproduct: productNumber * quantityNumber,
 
     });
+    this.myForm.patchValue({ Total: this.totalQtyAndProduct})
       // return productNumber * quantityNumber;
     }
   }
@@ -140,6 +146,19 @@ export class AddInvoiceComponent {
     if (this.myForm.valid) {
       // Assuming you want to output the entire form data object
       console.log('Form Data:', this.myForm.value);
+      const url = 'http://localhost:8080/AddInvoice';
+    const data = { data: this.myForm.value };
+
+    this.http.post(url, data).subscribe(
+      response => {
+        // Handle the response here
+        console.log(response);
+      },
+      error => {
+        // Handle errors here
+        console.error(error);
+      }
+    );
     } else {
       console.error('Form is not valid. Please check your inputs.');
     }

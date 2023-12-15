@@ -1,14 +1,14 @@
 <section>
 
-<form class="example-form">
+<form class="example-form"  [formGroup]="myForm">
   <mat-form-field class="example-full-width"  appearance="outline">
     <mat-label>Name</mat-label>
-    <input matInput>
+    <input formControlName="name" matInput>
   </mat-form-field>
   <mat-form-field class="example-full-width"  appearance="outline">
-    <mat-label>Telephone</mat-label>
+    <mat-label>Phone Number</mat-label>
     <span matPrefix>+ &nbsp;</span>
-    <input type="tel" matInput placeholder="555-555-1234">
+    <input formControlName="phone_Number" type="tel" matInput placeholder="77-777-7777">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
 
@@ -24,7 +24,7 @@
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Select product</mat-label>
-            <mat-select  #myselect required formControlName="input1" (selectionChange)="onOptionSelected($event, group)">
+            <mat-select  #myselect required formControlName="input1" (selectionChange)="onOptionSelected($event, group)"  (change)="calculateTotal5(myselect.value, qty.value,i)">
               <mat-option [value]="item.value" *ngFor="let item of Rood">{{item.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>

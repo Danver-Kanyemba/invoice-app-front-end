@@ -20,6 +20,9 @@ import { importProvidersFrom } from '@angular/core';
 import { AllInvoicesComponent } from './all-invoices/all-invoices.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,9 +34,9 @@ import { MatTableModule } from '@angular/material/table';
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-  MatFormFieldModule, MatInputModule, MatSelectModule,MatToolbarModule,MatIconModule,
-  MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule,
-  MatTableModule, MatSortModule
+  MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule,MatIconModule,
+  MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule, MatListModule,
+  MatTableModule, MatSortModule, MatTabsModule
   ],
   providers: [
     importProvidersFrom(HttpClientModule),

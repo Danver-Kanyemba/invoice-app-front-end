@@ -4,26 +4,24 @@ import {AfterViewInit, ViewChild} from '@angular/core';
 import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 
 export interface PeriodicElement {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  phone_Number: number;
+  Total: number;
+  created_at: string;
+  _id: string;
+  myFormArray: {
+    selectedOption: string,
+    input2: string,
+    input1: string,
+
+
+  }[];
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-]
+const ELEMENT_DATA: PeriodicElement[] = []
 
 @Component({
   selector: 'app-all-invoices',
@@ -31,9 +29,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./all-invoices.component.css'],
 
 })
-export class AllInvoicesComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+export class AllInvoicesComponent  implements AfterViewInit {
+  clickedRows = new Set<PeriodicElement>()
+  data:any;
+  displayedColumns: string[] = [ 'name', 'phone_Number','Total', 'created_at', '_id', 'myFormArray'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  apiUrl = 'http://localhost:8080/AllSalesInvoice';
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private http:HttpClient) {}
 
@@ -43,8 +45,6 @@ export class AllInvoicesComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-
-  /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports
     // multiple language, you would internationalize these strings.
@@ -57,10 +57,31 @@ export class AllInvoicesComponent implements AfterViewInit {
     }
   }
 
-
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    priva
+    this.getAllData()
+
+
+
+  }
+  getData(): Observable<any> {
+    return this.http.get(this.apiUrl);
+  }
+
+  getAllData() {
+    this.getData().subscribe(
+      (response) => {
+        this.data = response;
+        console.log("This is the data");
+
+// this.ELEMENT_DATA = this.data
+        console.table(this.data);
+        this.dataSource.data = this.data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }

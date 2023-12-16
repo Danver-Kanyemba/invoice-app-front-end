@@ -147,7 +147,7 @@ export class AddInvoiceComponent {
       // Assuming you want to output the entire form data object
       console.log('Form Data:', this.myForm.value);
       const url = 'http://localhost:8080/AddInvoice';
-    const data = { data: this.myForm.value };
+    const data = this.myForm.value;
 
     this.http.post(url, data).subscribe(
       response => {

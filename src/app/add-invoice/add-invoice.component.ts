@@ -1,8 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component} from '@angular/core';
 
 import { FormArray, FormBuilder,FormGroup, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
+import {
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
 interface Food {
   value: string;
   viewValue: string;
@@ -25,7 +32,7 @@ export class AddInvoiceComponent {
   get myFormArray() {
     return this.myForm.get('myFormArray') as FormArray;
   }
-  constructor(private fb: FormBuilder, private http : HttpClient){
+  constructor(private fb: FormBuilder, private http : HttpClient, private _snackBar: MatSnackBar){
     this.myForm = this.fb.group({
       name:[''],
       phone_Number:[''],
@@ -150,13 +157,24 @@ export class AddInvoiceComponent {
     const data = this.myForm.value;
 
     this.http.post(url, data).subscribe(
-      response => {
+      (response:any) => {
         // Handle the response here
         console.log(response);
+        // Check the HTTP status code
+        if (response.status >= 200 && response.status < 300) {
+          // Successful response
+          console.log(response);
+          this._snackBar.open(response.message, "Ok");
+        } else {
+          // Handle HTTP error
+          console.error('HTTP Error:', response);
+          this.handleHttpError(response);
+        }
       },
       error => {
         // Handle errors here
-        console.error(error);
+        console.error('HTTP Error:', error);
+        this._snackBar.open('Error occurred during the request', 'action');
       }
     );
     } else {
@@ -168,5 +186,18 @@ export class AddInvoiceComponent {
     return this.myFormArray.controls
       .map((group) => group.get('qtyandproduct')?.value || 0) // Use 0 as default value if input1 is null
       .reduce((acc, value) => acc + value, 0);
+  }
+
+  private handleHttpError(response2: HttpResponse<any>): void {
+    if (response2.status === 401) {
+      // Unauthorized, redirect to login or show a login prompt
+      this._snackBar.open('Unauthorized. Please log in.', 'action');
+    } else if (response2.status === 404) {
+      // Not Found, handle accordingly
+      this._snackBar.open('Resource not found', 'action');
+    } else {
+      // Generic error handling for other HTTP status codes
+      this._snackBar.open('Unexpected error. Please try again later.', 'Ok');
+    }
   }
 }

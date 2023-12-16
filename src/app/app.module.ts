@@ -22,6 +22,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
+import {
+  MatSnackBar,
+  MatSnackBarAction,
+  MatSnackBarActions,
+  MatSnackBarLabel,
+  MatSnackBarRef,
+} from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -36,10 +44,11 @@ import {MatTabsModule} from '@angular/material/tabs';
     FormsModule,
   MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule,MatIconModule,
   MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule, MatListModule,
-  MatTableModule, MatSortModule, MatTabsModule
+  MatTableModule, MatSortModule, MatTabsModule,
   ],
   providers: [
     importProvidersFrom(HttpClientModule),
+    MatSnackBar
   ],
   bootstrap: [AppComponent]
 })

@@ -65,6 +65,7 @@
             },
             "development": {
               "buildTarget": "invoice-app:build:development"
+              
             }
           },
           "defaultConfiguration": "development"

@@ -35,7 +35,7 @@ export class AllInvoicesComponent  implements AfterViewInit {
   displayedColumns: string[] = [ 'name', 'phone_Number','Total', 'created_at', '_id', 'myFormArray'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  apiUrl = 'http://localhost:8080/AllSalesInvoice';
+  apiUrl = 'http://localhost:3066/AllSalesInvoice';
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private http:HttpClient) {}
 

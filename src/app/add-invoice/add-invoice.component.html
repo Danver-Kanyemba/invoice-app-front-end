@@ -3,12 +3,12 @@
 <form class="example-form"  [formGroup]="myForm">
   <mat-form-field class="example-full-width"  appearance="outline">
     <mat-label>Name</mat-label>
-    <input formControlName="name" matInput>
+    <input formControlName="name" matInput required>
   </mat-form-field>
-  <mat-form-field class="example-full-width"  appearance="outline">
+  <mat-form-field class="example-full-width"   appearance="outline">
     <mat-label>Phone Number</mat-label>
     <span matPrefix>+ &nbsp;</span>
-    <input formControlName="phone_Number" type="tel" matInput placeholder="77-777-7777">
+    <input formControlName="phone_Number" type="tel" required matInput placeholder="77-777-7777">
     <mat-icon matSuffix>mode_edit</mat-icon>
   </mat-form-field>
 

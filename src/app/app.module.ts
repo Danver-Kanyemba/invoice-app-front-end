@@ -42,9 +42,9 @@ import {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-  MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule,MatIconModule,
-  MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule, MatListModule,
-  MatTableModule, MatSortModule, MatTabsModule,
+    MatFormFieldModule, MatInputModule, MatSelectModule, MatToolbarModule,MatIconModule,
+    MatButtonModule, MatGridListModule, MatDividerModule, ReactiveFormsModule, MatListModule,
+    MatTableModule, MatSortModule, MatTabsModule,
   ],
   providers: [
     importProvidersFrom(HttpClientModule),

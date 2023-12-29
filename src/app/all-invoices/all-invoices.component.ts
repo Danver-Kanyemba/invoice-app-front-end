@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Component } from '@angular/core';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AfterViewInit, ViewChild} from '@angular/core';
@@ -35,7 +36,7 @@ export class AllInvoicesComponent  implements AfterViewInit {
   displayedColumns: string[] = [ 'name', 'phone_Number','Total', 'created_at', '_id', 'myFormArray'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  apiUrl = 'http://localhost:3066/AllSalesInvoice';
+  apiUrl = environment.api_url+'/AllSalesInvoice';
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private http:HttpClient) {}
 

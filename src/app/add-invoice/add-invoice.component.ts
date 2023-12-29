@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component} from '@angular/core';
 
@@ -10,6 +11,10 @@ import {
   MatSnackBarLabel,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
+
+import {jsPDF} from "jspdf"
+
+
 interface Food {
   value: string;
   viewValue: string;
@@ -150,10 +155,28 @@ export class AddInvoiceComponent {
     this.updateTotal();
   }
   onSubmit() {
+    const doc = new jsPDF()
+    doc.addImage("/assets/HBLOGO.png", "JPEG", 0, 0,100,100)
+    doc.text("Hellow world ", 5, 100)
+    const myFormArray: FormArray = this.myForm.get('myFormArray') as FormArray;
+
+    // Convert form array to a regular array
+    const regularArray = myFormArray.controls.map(control =>
+      `${control.value.selectedOption} ${control.value.qtyandproduct}`
+
+
+      );
+
+      // const formattedString = regularArray.map(item => item.selected).join(', ');
+
+    doc.text(regularArray, 5, 120)
+
+    doc.save("a4.pdf")
+
     if (this.myForm.valid) {
       // Assuming you want to output the entire form data object
       console.log('Form Data:', this.myForm.value);
-      const url = 'http://localhost:3066/AddInvoice';
+      const url = environment.api_url+'/AddInvoice';
     const data = this.myForm.value;
 
     this.http.post(url, data).subscribe(

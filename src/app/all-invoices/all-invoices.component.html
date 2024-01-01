@@ -1,3 +1,5 @@
+<div class="example-table-container">
+<button mat-button >Print</button>
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8 demo-table">
 
@@ -50,6 +52,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickedRows.clear();clickedRows.add(row)"></tr>
 </table>
+</div>
 
 <!-- <mat-list>
   <mat-list-item *ngFor="let item of data">
@@ -78,7 +81,7 @@
 <!-- </div> -->
 
 
-
+<mat-divider></mat-divider>
 <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
   <mat-tab label="Products">
 

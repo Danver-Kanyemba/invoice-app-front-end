@@ -1,7 +1,7 @@
 import { environment } from './../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Component} from '@angular/core';
-
+import autoTable from 'jspdf-autotable'
 import { FormArray, FormBuilder,FormGroup, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import {
@@ -157,20 +157,41 @@ export class AddInvoiceComponent {
   onSubmit() {
     const doc = new jsPDF()
     doc.addImage("/assets/HBLOGO.png", "JPEG", 0, 0,100,100)
-    doc.text("Hellow world ", 5, 100)
+    const nameValue = this.myForm.get('name')?.value;
+    doc.text(nameValue, 5, 100)
+    const phoneNumberValue = this.myForm.get('phone_Number')?.value;
+    doc.text(phoneNumberValue, 5, 110)
+
     const myFormArray: FormArray = this.myForm.get('myFormArray') as FormArray;
 
     // Convert form array to a regular array
-    const regularArray = myFormArray.controls.map(control =>
-      `${control.value.selectedOption} ${control.value.qtyandproduct}`
+    // const regularArray = myFormArray.controls.map(control =>
+    //   // `${control.value.selectedOption} ${control.value.qtyandproduct}`
+    //   control.value.selectedOption,
+    //   control.value.qtyandproduct
 
+    //   );
 
-      );
+      const data = myFormArray.controls.map(control => [
+        control.value.selectedOption,
+        control.value.input2,
+        control.value.qtyandproduct
+      ]);
 
+      data.push(['Total','',this.totalQtyAndProduct])
       // const formattedString = regularArray.map(item => item.selected).join(', ');
+var columns=[[
 
-    doc.text(regularArray, 5, 120)
-
+  'Product', 'QTY', 'Total'
+]
+]
+    // doc.text(regularArray, 5, 120)
+autoTable(doc , {
+ head: columns,
+ body : data,
+ didDrawCell: (data) => { },
+  startY:120
+})
     doc.save("a4.pdf")
 
     if (this.myForm.valid) {

@@ -1,5 +1,10 @@
+<button mat-raised-button color="light" style="margin-left:5px;margin-bottom: 10px;">
+  <mat-icon class="mat-18">print</mat-icon>
+  Print
+</button>
+
 <div class="example-table-container">
-<button mat-button >Print</button>
+
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
        class="mat-elevation-z8 demo-table">
 
@@ -82,6 +87,7 @@
 
 
 <mat-divider></mat-divider>
+
 <mat-tab-group animationDuration="0ms" mat-stretch-tabs="false">
   <mat-tab label="Products">
 

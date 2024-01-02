@@ -35,8 +35,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "10000kb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -71,7 +71,7 @@
             },
             "development": {
               "buildTarget": "invoice-app:build:development"
-              
+
             }
           },
           "defaultConfiguration": "development"

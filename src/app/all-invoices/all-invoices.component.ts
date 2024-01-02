@@ -85,4 +85,21 @@ export class AllInvoicesComponent  implements AfterViewInit {
       }
     );
   }
+
+  printInvoice(id :string){
+    this.http.get(this.apiUrl+"/Invoice/"+id).subscribe(
+      (response) => {
+        this.data = response;
+        console.log("This is the data");
+
+// this.ELEMENT_DATA = this.data
+        console.table(this.data);
+        this.dataSource.data = this.data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+  }
 }

@@ -1,4 +1,4 @@
-<button mat-raised-button color="light" style="margin-left:5px;margin-bottom: 10px;">
+<button mat-raised-button color="light" style="margin-left:5px;margin-bottom: 10px;"  (click)="printInvoice()">
   <mat-icon class="mat-18">print</mat-icon>
   Print
 </button>
@@ -55,7 +55,7 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickedRows.clear();clickedRows.add(row)"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickedRows.clear();clickedRows.add(row);setClickedRow(row)"></tr>
 </table>
 </div>
 

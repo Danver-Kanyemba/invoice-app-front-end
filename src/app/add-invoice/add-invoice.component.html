@@ -20,12 +20,12 @@
     <div *ngFor="let group of myFormArray.controls; let i = index" [formGroupName]="i">
       <!-- <input formControlName="input1" type="text">
       <input formControlName="input2" type="text"> -->
-      <mat-grid-list cols="4" rowHeight="">
+      <mat-grid-list cols="3" rowHeight="100px">
         <mat-grid-tile>
           <mat-form-field>
             <mat-label>Select product</mat-label>
-            <mat-select  #myselect required formControlName="input1" (selectionChange)="onOptionSelected($event, group)"  (change)="calculateTotal5(myselect.value, qty.value,i)">
-              <mat-option [value]="item.value" *ngFor="let item of Rood">{{item.viewValue}}</mat-option>
+            <mat-select  #myselect required formControlName="input1" (selectionChange)="onOptionSelected($event, group);calculateTotal5(myselect.value, qty.value,i)"  (change)="calculateTotal5(myselect.value, qty.value,i)">
+              <mat-option [value]="item.value" *ngFor="let item of productData">{{item.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
@@ -39,13 +39,15 @@
             <mat-label >
               {{ calculateTotal(myselect.value, qty.value) }}
             </mat-label>
+
+            <button mat-icon-button color="primary"  (click)="removeRow(i)">
+              <mat-icon class="mat-18">delete</mat-icon>
+            </button>
             <!-- <input #qty matInput type="number"  hidden="true" formControlName="qtyandproduct"  [value]="calculateTotal(myselect.value, qty.value)"> -->
           <!-- </mat-form-field> -->
         </mat-grid-tile>
         <mat-grid-tile>
-          <button mat-icon-button color="primary"  (click)="removeRow(i)">
-            <mat-icon class="mat-18">delete</mat-icon>
-          </button>
+
         </mat-grid-tile>
         {{selectedFoodText}}
         <!-- <mat-divider></mat-divider> -->

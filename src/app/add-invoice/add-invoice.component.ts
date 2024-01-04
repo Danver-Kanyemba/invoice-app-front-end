@@ -13,6 +13,8 @@ import {
 } from '@angular/material/snack-bar';
 
 import {jsPDF} from "jspdf"
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 interface Food {
@@ -28,7 +30,7 @@ interface Food {
 
 export class AddInvoiceComponent {
   myForm: FormGroup;
-
+  productData: any;
   total: number = 0;
   selectedFoodText: string='';
   totalQtyAndProduct: number = 0;
@@ -37,7 +39,7 @@ export class AddInvoiceComponent {
   get myFormArray() {
     return this.myForm.get('myFormArray') as FormArray;
   }
-  constructor(private fb: FormBuilder, private http : HttpClient, private _snackBar: MatSnackBar){
+  constructor(private fb: FormBuilder, private http : HttpClient, private _snackBar: MatSnackBar, private router: Router){
     this.myForm = this.fb.group({
       name:[''],
       phone_Number:[''],
@@ -57,7 +59,25 @@ export class AddInvoiceComponent {
     });
 
     this.addNewRow();
+
+    this.getData().subscribe(
+      (response:any) => {
+        this.productData = response;
+        console.log("These are the Products");
+        console.table(this.productData);
+      },
+      (error:any) => {
+        console.error(error);
+      }
+      );
+
+
   }
+
+  getData(): Observable<any> {
+    return this.http.get(environment.api_url+"/AllProducts");
+  }
+
   Rood = [
     {value: '560', viewValue: 'Steak'},
     {value: '134', viewValue: 'Pizza'},
@@ -155,44 +175,7 @@ export class AddInvoiceComponent {
     this.updateTotal();
   }
   onSubmit() {
-    const doc = new jsPDF()
-    doc.addImage("/assets/HBLOGO.png", "JPEG", 0, 0,100,100)
-    const nameValue = this.myForm.get('name')?.value;
-    doc.text(nameValue, 5, 100)
-    const phoneNumberValue = this.myForm.get('phone_Number')?.value;
-    doc.text(phoneNumberValue, 5, 110)
 
-    const myFormArray: FormArray = this.myForm.get('myFormArray') as FormArray;
-
-    // Convert form array to a regular array
-    // const regularArray = myFormArray.controls.map(control =>
-    //   // `${control.value.selectedOption} ${control.value.qtyandproduct}`
-    //   control.value.selectedOption,
-    //   control.value.qtyandproduct
-
-    //   );
-
-      const data = myFormArray.controls.map(control => [
-        control.value.selectedOption,
-        control.value.input2,
-        control.value.qtyandproduct
-      ]);
-
-      data.push(['Total','',this.totalQtyAndProduct])
-      // const formattedString = regularArray.map(item => item.selected).join(', ');
-var columns=[[
-
-  'Product', 'QTY', 'Total'
-]
-]
-    // doc.text(regularArray, 5, 120)
-autoTable(doc , {
- head: columns,
- body : data,
- didDrawCell: (data) => { },
-  startY:120
-})
-    doc.save("a4.pdf")
 
     if (this.myForm.valid) {
       // Assuming you want to output the entire form data object
@@ -208,7 +191,39 @@ autoTable(doc , {
         if (response.status >= 200 && response.status < 300) {
           // Successful response
           console.log(response);
+
+          const doc = new jsPDF()
+          doc.addImage("/assets/HBLOGO.png", "JPEG", 0, 0,100,100)
+          const nameValue = this.myForm.get('name')?.value;
+          doc.text(nameValue, 10, 100)
+          const phoneNumberValue = this.myForm.get('phone_Number')?.value;
+          doc.text(phoneNumberValue, 10, 110)
+
+          const myFormArray: FormArray = this.myForm.get('myFormArray') as FormArray;
+
+            const data = myFormArray.controls.map(control => [
+              control.value.selectedOption,
+              control.value.input2,
+              control.value.qtyandproduct
+            ]);
+
+            data.push(['Total','',this.totalQtyAndProduct])
+            // const formattedString = regularArray.map(item => item.selected).join(', ');
+      var columns=[[
+
+        'Product', 'QTY', 'Total'
+      ]
+      ]
+          // doc.text(regularArray, 5, 120)
+      autoTable(doc , {
+       head: columns,
+       body : data,
+       didDrawCell: (data) => { },
+        startY:120
+      })
+          doc.save("a4.pdf")
           this._snackBar.open(response.message, "Ok");
+          this.router.navigate(['/all-invoices'])
         } else {
           // Handle HTTP error
           console.error('HTTP Error:', response);
